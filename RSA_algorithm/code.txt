@@ -1,0 +1,74 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.Numerics;
+namespace RSA_algorithm
+{
+    public class rsa
+    {
+     
+     int mod1(double num, int a)
+        {
+           
+            int res = 0;
+
+          
+            for (int i = 0; i < num; i++)
+                res = (res * 10 + (int)num - '0') % a;
+
+            return res;
+        }
+        public void start()
+        {
+            int i, p, q;
+            double n, euler, e, e_inv = 0, d;
+            string msg;
+            BigInteger  y;
+
+            Console.Write("enter p       : "); p = Convert.ToInt32(Console.ReadLine());
+            Console.Write("enter q       : "); q = Convert.ToInt32(Console.ReadLine());
+            n = p * q; Console.Write("n =     : "); Console.WriteLine(n);
+            euler = (p - 1) * (q - 1); Console.Write("euler = : "); Console.WriteLine(euler);
+            Console.Write("enter e       : "); e = Convert.ToInt32(Console.ReadLine());
+            Console.Write("enter message : "); msg = Console.ReadLine();
+            double[] cipher_arr = new double[msg.Length];
+            double[] msg_arr = new double[msg.Length];
+            Console.Write("encrypted text : ");
+            for (i = 0; i < msg.Length; i++)
+            {
+                cipher_arr[i] = (Math.Pow((msg[i]), e)) % n;  // encodinng at sender   C=M^e mod n
+                Console.Write($"{cipher_arr[i]} ");
+            }
+            Console.WriteLine();
+            Console.WriteLine("enter any key to decrypt the msg"); Console.ReadLine();                       // decoding at receiver   d=e^-1 mode euler     >>> M= C^d mod n
+            
+            for (i = 0; i < 10000; ++i)  //find e_inv
+                if ((i * e) % euler == 1)
+                { e_inv = i; break; }
+                       d =e_inv % euler;   ///   d=e^-1 mode euler     
+                    Console.WriteLine($"d= : {d} ");
+                    
+            for (i = 0; i < msg.Length; i++)
+                    {
+                 y= BigInteger.ModPow((BigInteger)cipher_arr[i], (BigInteger)d, (BigInteger)n);//M=c^d mod n
+             
+                msg_arr[i] =(long)y;
+              
+              Console.Write($"{(char)(msg_arr[i])}");
+                    }
+                    Console.ReadLine();
+            
+
+        }
+    }
+    internal class Program
+       { 
+        static void Main(string[] args)
+        {
+                rsa rsa1 = new rsa();
+                rsa1.start();
+        }
+      }
+}
