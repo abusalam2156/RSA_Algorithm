@@ -7,20 +7,7 @@ using System.Numerics;
 namespace RSA_algorithm
 {
     public class rsa
-    {
-     
-     int mod1(double num, int a)
-        {
-           
-            int res = 0;
-
-          
-            for (int i = 0; i < num; i++)
-                res = (res * 10 + (int)num - '0') % a;
-
-            return res;
-        }
-        public void start()
+    {   public void start()
         {
             int i, p, q;
             double n, euler, e, e_inv = 0, d;
@@ -59,10 +46,8 @@ namespace RSA_algorithm
               Console.Write($"{(char)(msg_arr[i])}");
                     }
                     Console.ReadLine();
-            
-
-        }
-    }
+            }
+      }
     internal class Program
        { 
         static void Main(string[] args)
